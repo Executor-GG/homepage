@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Executor GG</title>
+  <link rel="icon" type="image/png" href="https://placekitten.com/100/100" />
   <style>
     * {
       box-sizing: border-box;
@@ -17,60 +18,58 @@
       color: #ffffff;
     }
 
-    /* Navbar */
     header {
+      position: fixed;
       width: 100%;
+      top: 0;
+      background: #111;
       padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #111;
-      border-bottom: 1px solid #222;
-      position: fixed;
-      top: 0;
       z-index: 1000;
+      border-bottom: 1px solid #222;
     }
 
     header h2 {
       margin: 0;
       font-size: 1.5rem;
+      color: #fff;
     }
 
     nav a {
+      margin-left: 20px;
       color: #ccc;
       text-decoration: none;
-      margin-left: 20px;
       font-weight: bold;
-      transition: color 0.2s ease;
+      transition: 0.2s;
     }
 
     nav a:hover {
       color: #fff;
     }
 
-    /* Hero Section */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding-top: 80px;
+      padding-top: 100px;
       text-align: center;
     }
 
     .logo {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin-bottom: 20px;
       object-fit: cover;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
     }
 
     h1 {
       font-size: 3rem;
-      margin: 0;
       background: linear-gradient(90deg, #5865f2, #8a65f2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -83,10 +82,10 @@
     }
 
     p {
-      color: #ccc;
+      max-width: 600px;
+      color: #bbb;
       font-size: 1.1rem;
       margin: 15px 0 30px;
-      max-width: 600px;
     }
 
     .button {
@@ -100,6 +99,8 @@
       cursor: pointer;
       transition: background-color 0.2s;
       text-decoration: none;
+      display: inline-block;
+      margin: 5px;
     }
 
     .button:hover {
@@ -107,8 +108,8 @@
     }
 
     section {
-      padding: 60px 20px;
-      max-width: 800px;
+      padding: 80px 20px;
+      max-width: 900px;
       margin: 0 auto;
       text-align: center;
     }
@@ -121,6 +122,7 @@
     ul {
       list-style: none;
       padding: 0;
+      text-align: left;
     }
 
     li {
@@ -131,28 +133,32 @@
       color: #ddd;
     }
 
+    .button-row {
+      margin-top: 20px;
+    }
+
     footer {
       background: #111;
       color: #777;
       text-align: center;
       padding: 20px;
-      margin-top: 50px;
       border-top: 1px solid #222;
+      font-size: 0.9rem;
+    }
+
+    footer span {
+      animation: fadein 2s ease-in-out;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
 
     @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      .button {
-        width: 90%;
-      }
-
-      nav a {
-        margin-left: 10px;
-        font-size: 0.9rem;
-      }
+      h1 { font-size: 2rem; }
+      .button { width: 90%; }
+      nav a { margin-left: 10px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -165,45 +171,49 @@
       <a href="#about">About</a>
       <a href="#features">Features</a>
       <a href="#download">Download</a>
+      <a href="https://discord.gg/yourinvite" target="_blank">Discord</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <div class="hero" id="home">
-    <img src="https://icons8.de/icon/17116/disconnected" alt="Logo" class="logo" />
+    <img src="https://img.icons8.com/?size=100&id=V5pfxADpE6fv&format=png&color=000000" alt="Logo" class="logo" />
     <h1>Executor GG</h1>
-    <p>The ultimate exploit tool for powerful Roblox scripting. Safe, fast, and always updated.</p>
-    <a href="#download" class="button">Download Now</a>
+    <p>Fast, free, keyless — Roblox exploits made simple. Script anything with style.</p>
+    <div class="button-row">
+      <a href="#download" class="button">Download</a>
+      <a href="https://github.com/JohnyJonson/Executor-gg.wtf" class="button" target="_blank">GitHub</a>
+    </div>
   </div>
 
   <!-- About Section -->
   <section id="about">
-    <h2>About Executor GG</h2>
-    <p>Executor GG is a high-performance Roblox executor designed for script developers and advanced users. We prioritize security, simplicity, and speed.</p>
+    <h2>About</h2>
+    <p>Executor GG is a lightweight, no-key system Roblox exploit designed for performance and safety. Whether you're new or advanced, our intuitive interface makes it easy to load and manage your favorite scripts.</p>
   </section>
 
-  <!-- Features Section -->
+  <!-- Features -->
   <section id="features">
-    <h2>Key Features</h2>
+    <h2>Features</h2>
     <ul>
-      <li>✅ No key system</li>
-      <li>⚡ Fast injection & execution</li>
-      <li>🔒 Secure & undetected</li>
-      <li>🧠 Script hub built-in</li>
-      <li>💾 Frequent updates & support</li>
+      <li>⚡ Instant script injection</li>
+      <li>🚫 No key system required</li>
+      <li>🛡️ Undetected by major anti-cheats</li>
+      <li>📦 Auto-update mechanism</li>
+      <li>🔗 Discord integration + community</li>
     </ul>
   </section>
 
-  <!-- Download Section -->
+  <!-- Download -->
   <section id="download">
     <h2>Download</h2>
-    <p>Click the button below to get the latest version of Executor GG.</p>
-    <a href="#" class="button">Download .ZIP</a>
+    <p>Click below to get the latest version of Executor GG. Always free, always safe.</p>
+    <a href="https://github.com/JohnyJonson/Executor-gg.wtf" class="button">Download .ZIP</a>
   </section>
 
   <!-- Footer -->
   <footer>
-    © 2025 Executor GG. All rights reserved.
+    <span>© 2025 Executor GG. All rights reserved. | <a href="mailto:support@example.com">Contact Support</a></span>
   </footer>
 
 </body>
