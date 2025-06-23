@@ -7,20 +7,56 @@
   <style>
     * {
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #111;
-      color: #fff;
+      background-color: #0e0e0e;
+      color: #ffffff;
+    }
+
+    /* Navbar */
+    header {
+      width: 100%;
+      padding: 15px 30px;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+      border-bottom: 1px solid #222;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      padding-top: 80px;
       text-align: center;
-      flex-direction: column;
-      padding: 20px;
     }
 
     .logo {
@@ -29,31 +65,40 @@
       border-radius: 50%;
       margin-bottom: 20px;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin: 0;
+      background: linear-gradient(90deg, #5865f2, #8a65f2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #5865f2; }
+      to   { text-shadow: 0 0 25px #8a65f2; }
     }
 
     p {
       color: #ccc;
-      font-size: 1rem;
+      font-size: 1.1rem;
       margin: 15px 0 30px;
-      max-width: 400px;
+      max-width: 600px;
     }
 
     .button {
       background-color: #5865f2;
       color: white;
-      padding: 12px 30px;
+      padding: 14px 34px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
+      transition: background-color 0.2s;
       text-decoration: none;
     }
 
@@ -61,26 +106,105 @@
       background-color: #4752c4;
     }
 
-    @media (max-width: 500px) {
+    section {
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #1a1a1a;
+      margin: 10px 0;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: #ddd;
+    }
+
+    footer {
+      background: #111;
+      color: #777;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+      border-top: 1px solid #222;
+    }
+
+    @media (max-width: 600px) {
       h1 {
         font-size: 2rem;
       }
 
-      p {
-        font-size: 0.9rem;
+      .button {
+        width: 90%;
       }
 
-      .button {
-        padding: 10px 24px;
+      nav a {
+        margin-left: 10px;
         font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-  <img src="https://placekitten.com/200/200" alt="Logo" class="logo" />
-  <h1>Executor GG</h1>
-  <p>The best exploit tool for your Roblox scripts. Download now and boost your power.</p>
-  <a href="#" class="button">Download</a>
+
+  <!-- Navbar -->
+  <header>
+    <h2>Executor GG</h2>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero" id="home">
+    <img src="https://icons8.de/icon/17116/disconnected" alt="Logo" class="logo" />
+    <h1>Executor GG</h1>
+    <p>The ultimate exploit tool for powerful Roblox scripting. Safe, fast, and always updated.</p>
+    <a href="#download" class="button">Download Now</a>
+  </div>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Executor GG</h2>
+    <p>Executor GG is a high-performance Roblox executor designed for script developers and advanced users. We prioritize security, simplicity, and speed.</p>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <h2>Key Features</h2>
+    <ul>
+      <li>✅ No key system</li>
+      <li>⚡ Fast injection & execution</li>
+      <li>🔒 Secure & undetected</li>
+      <li>🧠 Script hub built-in</li>
+      <li>💾 Frequent updates & support</li>
+    </ul>
+  </section>
+
+  <!-- Download Section -->
+  <section id="download">
+    <h2>Download</h2>
+    <p>Click the button below to get the latest version of Executor GG.</p>
+    <a href="#" class="button">Download .ZIP</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Executor GG. All rights reserved.
+  </footer>
+
 </body>
 </html>
