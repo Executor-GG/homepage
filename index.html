@@ -1,546 +1,993 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Executor GG</title>
-  <link rel="icon" type="image/png" href="https://img.icons8.com/?size=100&id=V5pfxADpE6fv&format=png&color=000000" />
-  <style>
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
-      --bg: #1a1a1a;
-      --fg: #ddd;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    /* Header */
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Executor GG - The Ultimate Script Hub</title>
+<link rel="icon" href="https://img.icons8.com/?size=100&id=V5pfxADpE6fv&format=png&color=000000" />
+<style>
+  /* Reset */
+  *, *::before, *::after { box-sizing: border-box; }
+  body, h1, h2, h3, p, ul, li, input, select, button {
+    margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body {
+    background: #0e0e0e;
+    color: #eee;
+    line-height: 1.5;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  a { color: #5865f2; text-decoration: none; }
+  a:hover, a:focus { text-decoration: underline; }
+  button { cursor: pointer; }
+
+  /* Dark/Light Toggle */
+  .light-mode {
+    background: #fafafa;
+    color: #222;
+  }
+  .light-mode a { color: #3b49df; }
+  .light-mode header, .light-mode footer { background: #ddd; color: #222; }
+  .light-mode .card { background: #fff; color: #222; box-shadow: 0 0 10px #ccc; }
+  .light-mode #modalContent { background: #fff; color: #222; }
+  .light-mode input, .light-mode select, .light-mode textarea {
+    background: #fff; color: #222; border: 1px solid #ccc;
+  }
+  .light-mode .button {
+    background: #3b49df; color: white;
+  }
+  .light-mode .button:hover {
+    background: #2c35b9;
+  }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: #111;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 999;
+    border-bottom: 1px solid #222;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  }
+  header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #5865f2, #8a65f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  nav a {
+    margin-left: 1.4rem;
+    font-weight: 600;
+    color: #bbb;
+    transition: color 0.3s;
+  }
+  nav a:hover, nav a:focus {
+    color: #fff;
+  }
+
+  /* Dark/Light toggle button */
+  #modeToggle {
+    background: none;
+    border: 2px solid #5865f2;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #5865f2;
+    transition: all 0.3s;
+    user-select: none;
+  }
+  #modeToggle:hover, #modeToggle:focus {
+    background: #5865f2;
+    color: white;
+  }
+
+  /* Hero */
+  .hero {
+    padding-top: 110px;
+    text-align: center;
+    padding-bottom: 5rem;
+    background: linear-gradient(135deg, #222040, #121212);
+    user-select: none;
+  }
+  .hero img {
+    width: 130px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 8px #5865f2);
+    border-radius: 50%;
+  }
+  .hero h2 {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #5865f2, #8a65f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulseGlow 2.5s ease-in-out infinite alternate;
+  }
+  @keyframes pulseGlow {
+    0% { text-shadow: 0 0 10px #5865f2; }
+    100% { text-shadow: 0 0 25px #8a65f2; }
+  }
+  .hero p {
+    font-size: 1.25rem;
+    margin: 1rem auto 2rem;
+    max-width: 600px;
+    color: #ccc;
+  }
+  .hero .btnGroup {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .hero .btnGroup a {
+    background: #5865f2;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    box-shadow: 0 5px 15px rgba(88,101,242,0.6);
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .hero .btnGroup a:hover, .hero .btnGroup a:focus {
+    background: #4752c4;
+    box-shadow: 0 6px 20px rgba(71,82,196,0.8);
+  }
+
+  /* Sections */
+  section {
+    padding: 4rem 1rem 6rem;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+  }
+  section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1.4rem;
+    background: linear-gradient(90deg, #5865f2, #8a65f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  section p {
+    max-width: 700px;
+    margin: auto;
+    font-size: 1.1rem;
+    color: #bbb;
+  }
+
+  /* Features Section with icons and animations */
+  #features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .feature-card {
+    background: #1a1a1a;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 0 12px rgba(88,101,242,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+  .feature-card:hover, .feature-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 0 30px #5865f2;
+  }
+  .feature-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #5865f2;
+  }
+  .feature-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+  }
+  .feature-desc {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* Testimonials carousel */
+  #testimonials {
+    background: linear-gradient(135deg, #2c2c54, #121212);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: 5rem auto 8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #testimonials h2 {
+    margin-bottom: 2rem;
+  }
+  .testimonial {
+    display: none;
+    color: #eee;
+    font-style: italic;
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+    user-select: none;
+  }
+  .testimonial.active {
+    display: block;
+    animation: fadeIn 1s ease forwards;
+  }
+  .testimonial-author {
+    margin-top: 1rem;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 1rem;
+    color: #5865f2;
+  }
+  #testimonialControls {
+    position: absolute;
+    bottom: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .control-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #5865f2;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  .control-dot.active {
+    opacity: 1;
+  }
+  @keyframes fadeIn {
+    from {opacity:0;transform:translateY(15px);}
+    to {opacity:1;transform:none;}
+  }
+
+  /* Script Hub */
+  #scripts-list {
+    max-width: 1100px;
+    margin: auto;
+    text-align: left;
+    padding-bottom: 6rem;
+  }
+  #scripts-list h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  #controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  #searchInput {
+    flex: 1 1 280px;
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    background: #222;
+    color: #eee;
+    transition: background-color 0.3s;
+  }
+  #searchInput::placeholder {
+    color: #999;
+  }
+  #categoryFilters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    max-width: 600px;
+    justify-content: center;
+  }
+  .cat-filter {
+    background: #222;
+    color: #ccc;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .cat-filter:hover, .cat-filter:focus {
+    background: #5865f2;
+    color: white;
+    outline: none;
+  }
+  .cat-filter.active {
+    background: #5865f2;
+    color: white;
+    border-color: #4752c4;
+  }
+
+  #sortSelect {
+    padding: 0.6rem 1rem;
+    border-radius: 10px;
+    border: none;
+    background: #222;
+    color: #eee;
+    font-size: 1rem;
+  }
+
+  /* Script Cards */
+  #scriptContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: #222;
+    border-radius: 14px;
+    padding: 1.4rem 1.8rem;
+    box-shadow: 0 0 12px rgba(88,101,242,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s;
+  }
+  .card:hover, .card:focus-within {
+    box-shadow: 0 0 28px #5865f2;
+  }
+  .card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    color: #8a65f2;
+  }
+  .card p {
+    color: #ccc;
+    flex-grow: 1;
+  }
+  .card .info {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 0.8rem;
+  }
+  .card .buttons {
+    margin-top: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+  }
+  .button {
+    background: #5865f2;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    color: white;
+    font-weight: 700;
+    transition: background 0.3s;
+    text-align: center;
+    user-select: none;
+  }
+  .button:hover, .button:focus {
+    background: #4752c4;
+    outline: none;
+  }
+
+  /* Favorites Button */
+  .fav-btn {
+    background: transparent;
+    font-size: 1.4rem;
+    color: #aaa;
+    user-select: none;
+  }
+  .fav-btn.favorited {
+    color: #ffbb33;
+  }
+  .fav-btn:hover, .fav-btn:focus {
+    color: #ffbb33;
+    outline: none;
+  }
+
+  /* Modal */
+  #modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 1rem;
+  }
+  #modal.hidden {
+    display: none;
+  }
+  #modalContent {
+    background: #121212;
+    border-radius: 14px;
+    max-width: 700px;
+    width: 100%;
+    padding: 2rem 2.5rem 2.5rem;
+    box-shadow: 0 0 40px #5865f2;
+    position: relative;
+    color: #eee;
+    overflow-y: auto;
+    max-height: 85vh;
+  }
+  #modalClose {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #888;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  #modalClose:hover, #modalClose:focus {
+    color: #ff5555;
+  }
+  #modalTitle {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(90deg, #5865f2, #8a65f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  #modalDesc {
+    margin-bottom: 1rem;
+    color: #ccc;
+    font-size: 1.1rem;
+    white-space: pre-wrap;
+  }
+  #modalCat, #modalVer {
+    font-weight: 700;
+    color: #aaa;
+  }
+  #modalDownload {
+    display: inline-block;
+    margin-top: 1.6rem;
+    background: #5865f2;
+    padding: 0.7rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    user-select: none;
+    transition: background 0.3s;
+  }
+  #modalDownload:hover, #modalDownload:focus {
+    background: #4752c4;
+  }
+
+  /* Script preview with syntax highlighting */
+  pre {
+    background: #121212;
+    border-radius: 12px;
+    padding: 1rem 1.3rem;
+    font-family: 'Fira Code', monospace, monospace;
+    font-size: 1rem;
+    color: #c8c8c8;
+    overflow-x: auto;
+    margin-top: 1rem;
+    white-space: pre-wrap;
+  }
+  /* Basic syntax colors */
+  .keyword { color: #c678dd; font-weight: 700; }
+  .string { color: #98c379; }
+  .comment { color: #5c6370; font-style: italic; }
+  .function { color: #61afef; }
+  .number { color: #d19a66; }
+
+  /* Admin panel */
+  #adminPanel {
+    max-width: 700px;
+    margin: 3rem auto 6rem;
+    background: #121212;
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 0 20px #5865f2;
+  }
+  #adminPanel h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #8a65f2;
+  }
+  #adminPanel input, #adminPanel textarea {
+    width: 100%;
+    background: #222;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    color: #eee;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: background 0.3s;
+  }
+  #adminPanel input:focus, #adminPanel textarea:focus {
+    background: #2c2c54;
+    outline: none;
+  }
+  #aAdd {
+    display: block;
+    width: 100%;
+    background: #5865f2;
+    color: white;
+    padding: 0.8rem 0;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    user-select: none;
+    transition: background 0.3s;
+  }
+  #aAdd:hover, #aAdd:focus {
+    background: #4752c4;
+    outline: none;
+  }
+
+  /* Pagination */
+  #pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .page-btn {
+    background: #222;
+    border: none;
+    color: #ccc;
+    padding: 0.5rem 0.9rem;
+    margin: 0 0.3rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .page-btn:hover, .page-btn:focus {
+    background: #5865f2;
+    color: white;
+    outline: none;
+  }
+  .page-btn.active {
+    background: #8a65f2;
+    color: white;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
     header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      background: #111;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      border-bottom: 1px solid #222;
-    }
-    header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #fff;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
     }
     nav a {
-      margin-left: 20px;
-      color: #ccc;
-      font-weight: bold;
-      transition: color 0.2s;
+      margin-left: 0.7rem;
+      font-size: 0.9rem;
     }
-    nav a:hover {
-      color: #fff;
-    }
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      padding-top: 100px;
-      display: flex;
+    #controls {
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
     }
-    .logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #5865f2, #8a65f2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 2s infinite alternate;
-      margin: 0;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #5865f2; }
-      to { text-shadow: 0 0 25px #8a65f2; }
-    }
-    p.hero-text {
-      max-width: 600px;
-      color: #bbb;
-      font-size: 1.1rem;
-      margin: 15px 0 30px;
-    }
-    .button-row {
-      margin-top: 10px;
-    }
-    .button {
-      background-color: #5865f2;
-      color: white;
-      padding: 14px 34px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      display: inline-block;
-      margin: 5px;
-    }
-    .button:hover {
-      background-color: #4752c4;
-    }
-    /* Sections */
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    li {
-      background: #1a1a1a;
-      margin: 10px 0;
-      padding: 15px 20px;
-      border-radius: 8px;
-      color: #ddd;
-    }
-    /* Footer */
-    footer {
-      background: #111;
-      color: #777;
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid #222;
-      font-size: 0.9rem;
-    }
-    footer a {
-      color: #777;
-      font-weight: bold;
-    }
-    footer a:hover {
-      color: #fff;
-    }
-    /* Script Hub styles */
-    #scripts-list {
-      padding: 80px 20px 100px;
-      max-width: 900px;
-      margin: 0 auto 60px;
-      text-align: center;
-    }
-    #searchInput, #tagFilter {
-      padding: 10px;
-      margin-right: 10px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-      max-width: 200px;
-      background: #222;
-      color: #ddd;
-    }
-    #searchInput::placeholder {
-      color: #bbb;
-    }
-    #tagFilter {
-      cursor: pointer;
-    }
-    #scriptContainer {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .card {
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 15px;
-      color: var(--fg);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 0 8px rgba(88, 101, 242, 0.3);
-      transition: box-shadow 0.3s;
-    }
-    .card:hover {
-      box-shadow: 0 0 16px #5865f2;
-    }
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-    }
-    .card p {
-      font-size: 0.9rem;
-      flex-grow: 1;
-      margin-bottom: 10px;
-    }
-    .card .info {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-bottom: 10px;
-    }
-    .card .button {
-      margin-top: 5px;
-      width: 100%;
-      padding: 10px;
-      font-size: 0.9rem;
-      border-radius: 6px;
-    }
-    /* Modal styles */
-    #modal.hidden, #adminPanel.hidden {
-      display: none;
-    }
-    #modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
+    #categoryFilters {
       justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      padding: 10px;
     }
-    #modalContent {
-      background: var(--bg);
-      color: var(--fg);
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 400px;
-      width: 100%;
-      position: relative;
-      box-shadow: 0 0 20px #5865f2;
-      text-align: left;
-    }
-    #modalClose {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #bbb;
-      font-weight: bold;
-    }
-    #modalClose:hover {
-      color: #fff;
-    }
-    #modalContent h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-    #modalContent p {
-      margin: 6px 0;
-      line-height: 1.4;
-    }
-    #modalDownload {
-      background: #5865f2;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      display: inline-block;
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: center;
-      cursor: pointer;
-    }
-    #modalDownload:hover {
-      background: #4752c4;
-    }
-    /* Admin Panel */
-    #adminPanel {
-      background: #222;
-      color: #ddd;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin: 40px auto 80px;
-      text-align: left;
-      box-shadow: 0 0 12px #5865f2;
-    }
-    #adminPanel h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-    #adminPanel input, #adminPanel textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 6px;
-      background: #333;
-      color: #ddd;
-      font-size: 1rem;
-      resize: vertical;
-    }
-    #adminPanel textarea {
-      min-height: 80px;
-    }
-    #adminPanel button {
-      background: #5865f2;
-      color: white;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-      transition: background-color 0.2s;
-    }
-    #adminPanel button:hover {
-      background: #4752c4;
-    }
-    #adminToggle {
-      background: #5865f2;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
-      transition: background-color 0.2s;
-    }
-    #adminToggle:hover {
-      background: #4752c4;
-    }
-    /* Responsive tweaks */
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
-      nav a { margin-left: 10px; font-size: 0.9rem; }
-      #searchInput, #tagFilter {
-        max-width: 100%;
-        margin-bottom: 10px;
-      }
-      #adminToggle {
-        margin-left: 0;
-        margin-bottom: 10px;
-        width: 100%;
-      }
-      #scriptContainer {
-        grid-template-columns: 1fr;
-      }
-      .button-row {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .button {
-        width: 90%;
-        margin: 5px 0;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header>
-    <h2>Executor GG</h2>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <a href="#scripts-list">Scripts</a>
-      <a href="#download">Download</a>
-      <a href="https://discord.gg/yourinvite" target="_blank" rel="noopener noreferrer">Discord</a>
-    </nav>
-  </header>
+<header>
+  <h1>Executor GG</h1>
+  <nav aria-label="Primary">
+    <a href="#scripts-list">Script Hub</a>
+    <a href="#features">Features</a>
+    <a href="#download">Download</a>
+  </nav>
+  <button id="modeToggle" aria-pressed="false" aria-label="Toggle dark and light mode">Light Mode</button>
+</header>
 
-  <!-- Hero -->
-  <div class="hero" id="home">
-    <img src="https://img.icons8.com/?size=100&id=V5pfxADpE6fv&format=png&color=000000" alt="Executor GG Logo" class="logo" />
-    <h1>Executor GG</h1>
-    <p class="hero-text">
-      The best executor to run your favorite Roblox scripts. Fast, reliable, and user-friendly.
-    </p>
-    <div class="button-row">
-      <a href="#download" class="button">Download Now</a>
-      <a href="https://discord.gg/kKXngSwqRm" target="_blank" class="button">Join Discord</a>
+<section class="hero" role="banner">
+  <img src="https://img.icons8.com/?size=100&id=V5pfxADpE6fv&format=png&color=5865f2" alt="Executor GG Logo" />
+  <h2>The Ultimate Roblox Script Executor</h2>
+  <p>Fast, reliable, and user-friendly. Explore the most powerful scripts available.</p>
+  <div class="btnGroup">
+    <a href="#scripts-list" class="button">Explore Scripts</a>
+    <a href="https://discord.gg/kKXngSwqRm" target="_blank" rel="noopener" class="button">Join Discord</a>
+  </div>
+</section>
+
+<section id="features" aria-label="Key Features">
+  <h2>Why Executor GG?</h2>
+  <div class="feature-card" tabindex="0" role="group" aria-describedby="feat1-desc">
+    <div class="feature-icon">⚡</div>
+    <h3 class="feature-title">Blazing Speed</h3>
+    <p id="feat1-desc" class="feature-desc">Run your scripts faster than ever with our optimized engine.</p>
+  </div>
+  <div class="feature-card" tabindex="0" role="group" aria-describedby="feat2-desc">
+    <div class="feature-icon">🛡️</div>
+    <h3 class="feature-title">Secure & Stable</h3>
+    <p id="feat2-desc" class="feature-desc">Robust safety features protect your account and data.</p>
+  </div>
+  <div class="feature-card" tabindex="0" role="group" aria-describedby="feat3-desc">
+    <div class="feature-icon">🔍</div>
+    <h3 class="feature-title">Powerful Script Hub</h3>
+    <p id="feat3-desc" class="feature-desc">Search, filter, and favorite scripts with ease and style.</p>
+  </div>
+  <div class="feature-card" tabindex="0" role="group" aria-describedby="feat4-desc">
+    <div class="feature-icon">🎨</div>
+    <h3 class="feature-title">Beautiful UI</h3>
+    <p id="feat4-desc" class="feature-desc">Modern, sleek, and responsive interface for all devices.</p>
+  </div>
+</section>
+
+<section id="testimonials" aria-label="User Testimonials">
+  <h2>What Our Users Say</h2>
+  <blockquote class="testimonial active" tabindex="0">
+    “Executor GG has completely changed how I script in Roblox. Lightning fast and easy to use!”
+    <footer class="testimonial-author">— Alex P.</footer>
+  </blockquote>
+  <blockquote class="testimonial" tabindex="0">
+    “The script hub is my go-to place for quality Roblox scripts. Love the filtering and favorites!”
+    <footer class="testimonial-author">— Maria K.</footer>
+  </blockquote>
+  <blockquote class="testimonial" tabindex="0">
+    “Smooth UI, powerful features, and excellent support. Highly recommend Executor GG.”
+    <footer class="testimonial-author">— Jamal T.</footer>
+  </blockquote>
+  <div class="testimonial-controls" aria-label="Testimonial navigation">
+    <button id="prevTestimonial" aria-label="Previous testimonial">←</button>
+    <button id="nextTestimonial" aria-label="Next testimonial">→</button>
+  </div>
+</section>
+
+<section id="scripts-list" aria-label="Scripts List">
+  <div id="controls">
+    <input type="text" id="searchInput" aria-label="Search scripts" placeholder="Search scripts..." />
+    <div id="categoryFilters" role="list" aria-label="Script categories">
+      <button class="cat-filter active" data-cat="all" aria-pressed="true">All</button>
+      <button class="cat-filter" data-cat="fun" aria-pressed="false">Fun</button>
+      <button class="cat-filter" data-cat="gameplay" aria-pressed="false">Gameplay</button>
+      <button class="cat-filter" data-cat="admin" aria-pressed="false">Admin</button>
+      <button class="cat-filter" data-cat="utility" aria-pressed="false">Utility</button>
     </div>
+    <select id="sortSelect" aria-label="Sort scripts">
+      <option value="newest">Newest</option>
+      <option value="popular">Most Popular</option>
+      <option value="favorites">Favorites</option>
+    </select>
   </div>
 
-  <!-- About Section -->
-  <section id="about">
-    <h2>About Executor GG</h2>
-    <p>
-      Executor GG is a powerful Roblox executor designed for performance and stability. We offer regular updates and community-driven features to ensure you get the best experience.
-    </p>
-  </section>
+  <div id="scriptContainer" aria-live="polite" aria-atomic="true">
+    <!-- Script cards inserted here by JS -->
+  </div>
 
-  <!-- Features Section -->
-  <section id="features">
-    <h2>Features</h2>
-    <ul>
-      <li>Ultra-fast script execution</li>
-      <li>Wide script compatibility</li>
-      <li>Modern and intuitive UI</li>
-      <li>Safe and secure</li>
-      <li>Built-in Script Hub with search and filters</li>
-    </ul>
-  </section>
+  <div id="pagination" role="navigation" aria-label="Pagination controls">
+    <!-- Pagination buttons inserted here by JS -->
+  </div>
+</section>
 
-  <!-- Script Hub Section -->
-  <section id="scripts-list">
-    <h2>Script Hub</h2>
-    <div>
-      <input id="searchInput" type="text" placeholder="Search scripts…" />
-      <select id="tagFilter" aria-label="Filter scripts by category">
-        <option value="All">All Categories</option>
-      </select>
-      <button id="adminToggle" aria-pressed="false" aria-label="Toggle Admin Mode">🔧 Admin Mode</button>
-    </div>
-    <div id="scriptContainer" aria-live="polite" aria-relevant="additions"></div>
+<section id="download" aria-label="Download Section" style="text-align:center; padding: 2rem;">
+  <h2>Get Executor GG Now</h2>
+  <a href="/download/executor-gg.exe" id="downloadBtn" class="button" role="button" aria-label="Download Executor GG">Download</a>
+  <p style="margin-top: 1rem; color: #ccc;">Supports Windows 10 and above. Safe and lightweight.</p>
+</section>
 
-    <!-- Modal -->
-    <div id="modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-      <div id="modalContent">
-        <button id="modalClose" aria-label="Close">&times;</button>
-        <h3 id="modalTitle"></h3>
-        <p id="modalDesc"></p>
-        <p><strong>Category:</strong> <span id="modalCat"></span></p>
-        <p><strong>Version:</strong> <span id="modalVer"></span></p>
-        <a id="modalDownload" class="button" target="_blank" rel="noopener noreferrer">Download</a>
-      </div>
-    </div>
+<!-- Modal -->
+<div id="modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div id="modalContent">
+    <button id="modalClose" aria-label="Close details">&times;</button>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <p><strong>Category:</strong> <span id="modalCat"></span></p>
+    <p><strong>Version:</strong> <span id="modalVer"></span></p>
+    <pre id="modalCode"></pre>
+    <a href="#" id="modalDownload" role="button">Download Script</a>
+  </div>
+</div>
 
-    <!-- Admin panel -->
-    <div id="adminPanel" class="hidden" aria-label="Admin Add Script Panel">
-      <h3>Add Script</h3>
-      <input id="aName" type="text" placeholder="Name" aria-label="Script Name" />
-      <input id="aCategory" type="text" placeholder="Category" aria-label="Script Category" />
-      <textarea id="aDesc" placeholder="Description" aria-label="Script Description"></textarea>
-      <input id="aVersion" type="text" placeholder="Version" aria-label="Script Version" />
-      <input id="aUrl" type="url" placeholder="Download URL" aria-label="Script Download URL" />
-      <button id="aAdd">Add Script</button>
-    </div>
-  </section>
+<!-- Admin Panel -->
+<section id="adminPanel" aria-label="Admin Panel">
+  <h3>Admin Panel - Add New Script</h3>
+  <input type="text" id="aTitle" placeholder="Script Title" aria-label="Script Title" required />
+  <textarea id="aDesc" rows="3" placeholder="Description" aria-label="Description" required></textarea>
+  <input type="text" id="aCategory" placeholder="Category (fun, gameplay, admin, utility)" aria-label="Category" required />
+  <input type="text" id="aVersion" placeholder="Version" aria-label="Version" required />
+  <textarea id="aCode" rows="6" placeholder="Script code here..." aria-label="Script code" required></textarea>
+  <button id="aAdd">Add Script</button>
+</section>
 
-  <!-- Download Section -->
-  <section id="download">
-    <h2>Download Executor GG</h2>
-    <p>
-      Ready to get started? Download the latest version of Executor GG for free and experience seamless script execution.
-    </p>
-    <a href="https://github.com/JohnyJonson/Executor-gg.wtf" class="button">Download Now</a>
-  </section>
+<script>
+  // Sample scripts data (this would come from a real backend in production)
+  const scripts = [
+    {
+      id: 1,
+      title: "Fly Hack",
+      description: "Enables flying in any game.",
+      category: "gameplay",
+      version: "1.0.3",
+      code: "// Fly Hack script code\nfunction fly() {\n  // flying logic here\n}",
+      popularity: 120,
+      favorites: 34,
+      added: new Date("2025-04-10")
+    },
+    {
+      id: 2,
+      title: "Admin Commands",
+      description: "Powerful admin panel with many commands.",
+      category: "admin",
+      version: "2.1.0",
+      code: "// Admin Commands script\nfunction adminPanel() {\n  // commands\n}",
+      popularity: 95,
+      favorites: 56,
+      added: new Date("2025-03-05")
+    },
+    {
+      id: 3,
+      title: "Rainbow Fun",
+      description: "Colorful effects and fun animations.",
+      category: "fun",
+      version: "0.9.8",
+      code: "// Rainbow Fun script\nfunction rainbow() {\n  // colors\n}",
+      popularity: 200,
+      favorites: 110,
+      added: new Date("2025-05-01")
+    },
+    {
+      id: 4,
+      title: "Auto Farm",
+      description: "Automatically farm resources.",
+      category: "utility",
+      version: "1.2.4",
+      code: "// Auto Farm script\nfunction autoFarm() {\n  // farming logic\n}",
+      popularity: 150,
+      favorites: 78,
+      added: new Date("2025-04-20")
+    },
+  ];
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Executor GG. Made with ❤️ by Your Team. <a href="https://discord.gg/kKXngSwqRm" target="_blank" rel="noopener noreferrer">Join our Discord</a></p>
-  </footer>
+  // Pagination variables
+  const scriptsPerPage = 4;
+  let currentPage = 1;
 
-  <script>
-    let scripts = [
-      {name:"Blox Fruits Auto Farm",desc:"Automates farming Blox Fruits",category:"Farming",version:"1.2",url:"#"},
-      {name:"Ninja Legends Speed Hack",desc:"Super-fast movement",category:"Speed",version:"0.9",url:"#"},
-      {name:"Build A Boat Auto Win",desc:"Auto-completes challenges",category:"Builder",version:"1.0",url:"#"},
-      {name:"Pet Simulator X Auto Hatch",desc:"Auto hatches pets",category:"Collection",version:"0.7",url:"#"},
-    ];
+  // State
+  let currentCategory = "all";
+  let currentSort = "newest";
+  let currentSearch = "";
+  let favorites = new Set();
 
-    const container = document.getElementById("scriptContainer");
-    const input = document.getElementById("searchInput");
-    const tagFilter = document.getElementById("tagFilter");
-    const modal = document.getElementById("modal");
-    const adminToggle = document.getElementById("adminToggle");
-    const adminPanel = document.getElementById("adminPanel");
+  // DOM elements
+  const scriptContainer = document.getElementById("scriptContainer");
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilters = document.querySelectorAll(".cat-filter");
+  const sortSelect = document.getElementById("sortSelect");
+  const pagination = document.getElementById("pagination");
+  const modal = document.getElementById("modal");
+  const modalClose = document.getElementById("modalClose");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalCat = document.getElementById("modalCat");
+  const modalVer = document.getElementById("modalVer");
+  const modalCode = document.getElementById("modalCode");
+  const modalDownload = document.getElementById("modalDownload");
 
-    function render(list){
-      container.innerHTML = "";
-      // Rebuild tags for filter dropdown
-      const tags = new Set(["All"]);
-      list.forEach(s => tags.add(s.category));
-      tagFilter.innerHTML = [...tags].map(t=>`<option${t===tagFilter.value?" selected":""}>${t}</option>`).join("");
-      // Filter and display cards
-      list.filter(s => 
-        (tagFilter.value==="All"||s.category===tagFilter.value) &&
-        (s.name.toLowerCase().includes(input.value.toLowerCase()) || s.desc.toLowerCase().includes(input.value.toLowerCase()))
-      ).forEach(s => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-          <h3>${s.name}</h3>
-          <p>${s.desc}</p>
-          <p class="info">Category: ${s.category} | v${s.version}</p>
-          <div style="margin-top:auto;">
-            <a class="button" href="${s.url}" target="_blank" rel="noopener noreferrer">Download</a>
-            <button class="button" aria-label="View details for ${s.name}" onclick='showModal(${JSON.stringify(JSON.stringify(s))})'>View Script</button>
-          </div>`;
-        container.appendChild(div);
+  // Admin panel elements
+  const aTitle = document.getElementById("aTitle");
+  const aDesc = document.getElementById("aDesc");
+  const aCategory = document.getElementById("aCategory");
+  const aVersion = document.getElementById("aVersion");
+  const aCode = document.getElementById("aCode");
+  const aAdd = document.getElementById("aAdd");
+
+  // Mode toggle
+  const modeToggle = document.getElementById("modeToggle");
+  modeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    const isLight = document.body.classList.contains("light-mode");
+    modeToggle.textContent = isLight ? "Dark Mode" : "Light Mode";
+    modeToggle.setAttribute("aria-pressed", isLight.toString());
+  });
+
+  // Render scripts based on filters, search, sorting, and pagination
+  function renderScripts() {
+    let filtered = scripts.filter(s => {
+      const matchesCategory = currentCategory === "all" || s.category === currentCategory;
+      const matchesSearch = s.title.toLowerCase().includes(currentSearch) || s.description.toLowerCase().includes(currentSearch);
+      return matchesCategory && matchesSearch;
+    });
+
+    // Sorting
+    if (currentSort === "newest") {
+      filtered.sort((a,b) => b.added - a.added);
+    } else if (currentSort === "popular") {
+      filtered.sort((a,b) => b.popularity - a.popularity);
+    } else if (currentSort === "favorites") {
+      filtered = filtered.filter(s => favorites.has(s.id));
+    }
+
+    // Pagination logic
+    const totalScripts = filtered.length;
+    const totalPages = Math.ceil(totalScripts / scriptsPerPage);
+    if (currentPage > totalPages) currentPage = totalPages || 1;
+
+    const startIndex = (currentPage - 1) * scriptsPerPage;
+    const pagedScripts = filtered.slice(startIndex, startIndex + scriptsPerPage);
+
+    // Render script cards
+    scriptContainer.innerHTML = "";
+    if (pagedScripts.length === 0) {
+      scriptContainer.innerHTML = "<p style='color:#ccc; text-align:center;'>No scripts found.</p>";
+      pagination.innerHTML = "";
+      return;
+    }
+    pagedScripts.forEach(script => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `View details for ${script.title}`);
+
+      card.innerHTML = `
+        <h3>${script.title}</h3>
+        <p>${script.description}</p>
+        <p class="info">Category: ${script.category} | Version: ${script.version}</p>
+        <div class="buttons">
+          <button class="button view-btn" data-id="${script.id}">View</button>
+          <button class="fav-btn ${favorites.has(script.id) ? "favorited" : ""}" aria-label="Toggle favorite" data-id="${script.id}">&#9733;</button>
+        </div>
+      `;
+
+      // View button opens modal with details
+      card.querySelector(".view-btn").addEventListener("click", () => openModal(script.id));
+
+      // Favorite toggle button
+      card.querySelector(".fav-btn").addEventListener("click", e => {
+        const id = script.id;
+        if (favorites.has(id)) {
+          favorites.delete(id);
+        } else {
+          favorites.add(id);
+        }
+        renderScripts();
       });
+
+      scriptContainer.appendChild(card);
+    });
+
+    // Render pagination
+    pagination.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.className = "page-btn" + (i === currentPage ? " active" : "");
+      btn.textContent = i;
+      btn.setAttribute("aria-label", `Go to page ${i}`);
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        renderScripts();
+      });
+      pagination.appendChild(btn);
     }
+  }
 
-    function showModal(json){
-      const s = JSON.parse(json);
-      modal.classList.remove("hidden");
-      document.getElementById("modalTitle").textContent = s.name;
-      document.getElementById("modalDesc").textContent = s.desc;
-      document.getElementById("modalCat").textContent = s.category;
-      document.getElementById("modalVer").textContent = s.version;
-      document.getElementById("modalDownload").href = s.url;
-      document.getElementById("modalDownload").focus();
-    }
+  // Open modal with script details
+  function openModal(id) {
+    const script = scripts.find(s => s.id === id);
+    if (!script) return;
 
-    document.getElementById("modalClose").onclick = () => modal.classList.add("hidden");
-    modal.onclick = e => { if(e.target === modal) modal.classList.add("hidden"); };
-
-    input.addEventListener("input", () => render(scripts));
-    tagFilter.addEventListener("change", () => render(scripts));
-
-    adminToggle.onclick = () => {
-      const isHidden = adminPanel.classList.toggle("hidden");
-      adminToggle.setAttribute("aria-pressed", !isHidden);
+    modalTitle.textContent = script.title;
+    modalDesc.textContent = script.description;
+    modalCat.textContent = script.category;
+    modalVer.textContent = script.version;
+    modalCode.textContent = script.code;
+    modalDownload.href = `#download-script-${script.id}`;
+    modalDownload.onclick = e => {
+      e.preventDefault();
+      alert("Download script: " + script.title);
+      // Here you would handle actual download logic
     };
 
-    document.getElementById("aAdd").onclick = () => {
-      const newScript = {
-        name: document.getElementById("aName").value.trim(),
-        category: document.getElementById("aCategory").value.trim(),
-        desc: document.getElementById("aDesc").value.trim(),
-        version: document.getElementById("aVersion").value.trim(),
-        url: document.getElementById("aUrl").value.trim(),
-      };
-      if(!newScript.name || !newScript.category || !newScript.desc || !newScript.version || !newScript.url){
-        alert("Please fill in all fields before adding a script.");
-        return;
-      }
-      scripts.push(newScript);
-      render(scripts);
-      // Clear inputs
-      document.getElementById("aName").value = "";
-      document.getElementById("aCategory").value = "";
-      document.getElementById("aDesc").value = "";
-      document.getElementById("aVersion").value = "";
-      document.getElementById("aUrl").value = "";
-    };
+    modal.classList.remove("hidden");
+    modal.focus();
+  }
 
-    // Initial render
-    render(scripts);
-  </script>
+  // Close modal
+  modalClose.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+  modal.addEventListener("click", e => {
+    if (e.target === modal) modal.classList.add("hidden");
+  });
+
+  // Search input event
+  searchInput.addEventListener("input", e => {
+    currentSearch = e.target.value.toLowerCase();
+    currentPage = 1;
+    renderScripts();
+  });
+
+  // Category filters event
+  categoryFilters.forEach(btn => {
+    btn.addEventListener("click", () => {
+      categoryFilters.forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
+      currentCategory = btn.dataset.cat;
+      currentPage = 1;
+      renderScripts();
+    });
+  });
+
+  // Sort select event
+  sortSelect.addEventListener("change", e => {
+    currentSort = e.target.value;
+    currentPage = 1;
+    renderScripts();
+  });
+
+  // Admin panel: Add new script
+  aAdd.addEventListener("click", () => {
+    const title = aTitle.value.trim();
+    const desc = aDesc.value.trim();
+    const cat = aCategory.value.trim().toLowerCase();
+    const ver = aVersion.value.trim();
+    const code = aCode.value.trim();
+
+    if (!title || !desc || !cat || !ver || !code) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    if (!["fun", "gameplay", "admin", "utility"].includes(cat)) {
+      alert("Category must be one of: fun, gameplay, admin, utility.");
+      return;
+    }
+
+    const newScript = {
+      id: scripts.length + 1,
+      title,
+      description: desc,
+      category: cat,
+      version: ver,
+      code,
+      popularity: 0,
+      favorites: 0,
+      added: new Date()
+    };
+    scripts.push(newScript);
+    // Clear inputs
+    aTitle.value = "";
+    aDesc.value = "";
+    aCategory.value = "";
+    aVersion.value = "";
+    aCode.value = "";
+    currentPage = 1;
+    renderScripts();
+    alert("Script added successfully!");
+  });
+
+  // Initial render
+  renderScripts();
+
+  // Testimonial carousel logic
+  const testimonials = document.querySelectorAll(".testimonial");
+  let currentTestimonial = 0;
+  document.getElementById("nextTestimonial").addEventListener("click", () => {
+    testimonials[currentTestimonial].classList.remove("active");
+    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+    testimonials[currentTestimonial].classList.add("active");
+  });
+  document.getElementById("prevTestimonial").addEventListener("click", () => {
+    testimonials[currentTestimonial].classList.remove("active");
+    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+    testimonials[currentTestimonial].classList.add("active");
+  });
+</script>
 
 </body>
 </html>
